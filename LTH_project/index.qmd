@@ -10,8 +10,8 @@ editor:
 ---
 
 # 분석 목적
-전통시장 홍보 목적
-가설 : 만약 인구가 많아도 점포수가 적으면 홍보 필요성이 생긴다.
+
+전통시장 홍보 목적 가설 : 만약 인구가 많아도 점포수가 적으면 홍보 필요성이 생긴다.
 여행 루트에 전통시장을 추가?
 
 2024년에 보도된 [세계타임즈](https://m.thesegye.com/news/view/1065580969734925)에서 KB국민카드의 전통시장 카드 소비 데이터 분석을 볼 수 있습니다.
@@ -158,13 +158,13 @@ pop_ratio = pop_ratio.transpose()
 pop_ratio
 
 ```
+
 ```{python}
 # 지역 칼럼 추가하기
 pop_ratio['region'] = ['서울특별시', '부산광역시', '대구광역시', '인천광역시', '광주광역시', '대전광역시', '울산광역시', '세종특별시', '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도', '경상북도', '경상남도', '제주도']
 
 pop_ratio
 ```
-
 
 # 이전 데이터 불러오기
 
@@ -237,6 +237,7 @@ sns.barplot(data = df, x = 'type', y = 'market_count', hue = 'market_scale')
 plt.show()
 
 ```
+
 ```{python}
 plt.clf()
 
@@ -259,6 +260,7 @@ market_pop
 ```{python}
 market_pop['age_over_60'].describe()
 ```
+
 평균 20.25% 보다 높은 지역을 60대 이상 비율이 많다고 정의
 
 # 표 그리기
@@ -267,11 +269,10 @@ market_pop['age_over_60'].describe()
 # 평균 변수 지정
 mean_60 = market_pop['age_over_60'].mean()
 
+mean_60_up = np
+
 # 집단 나누기
 market_pop.groupby('market_scale') \
-          .agg(mean = ('age_over_60','mean'))
+          .sort_values
 
 ```
-
-
-
