@@ -269,10 +269,11 @@ market_pop['age_over_60'].describe()
 # 평균 변수 지정
 mean_60 = market_pop['age_over_60'].mean()
 
-mean_60_up = np
-
+mean_60_up = market_pop['age_over_60'] >= mean_60
+mean_60_down = market_pop['age_over_60'] <= mean_60
+mean_60_down.count()
 # 집단 나누기
-market_pop.groupby('market_scale') \
-          .sort_values
+sdasdasd
+
 
 ```
