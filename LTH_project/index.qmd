@@ -65,6 +65,27 @@ pop.iloc[1:18,1:14] = subset
 pop = pop.iloc[0:18,0:14]
 pop
 ```
+#### 전국을 제외한 총 인구 그래프화
+```{python}
+data_pop = pop.drop(0).groupby('행정기관') \
+                      .agg(count = ('총 인구수','min'))
+data_pop = data_pop.sort_values('count',ascending = False)
+data_pop
+```
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.rcParams.update({'font.family' : 'Malgun Gothic'})
+
+plt.clf()
+sns.barplot(data = data_pop, y = '행정기관', x = 'count', hue = '행정기관')
+plt.show()
+
+```
+경기도와 서울은 수도권 특성상 면적대비 많은 인구가 몰려있다.
+그렇기에 전통시장의 갯수도 많을 수 밖에 없는 조건이므로 나중 분석에서 제외할 예정이다.
+
 
 #### 각 지역마다 연령층 비율 계산하기
 
@@ -166,7 +187,7 @@ pop_ratio['region'] = ['서울특별시', '부산광역시', '대구광역시', 
 pop_ratio
 ```
 
-# 이전 데이터 불러오기
+# 전통시장 데이터 불러오기
 
 ```{python}
 # 데이터 불러오기
@@ -221,9 +242,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # x축을 편의 시설 레벨
+plt.clf()
 sns.countplot(data = market2, x = 'level', hue = 'level')
 plt.show()
+```
 
+```{python}
 # 그래프 그리기 위한 df 생성
 # 시장 유형와 규모 크기에 따른 그룹화 / 규모 크기 갯수 추가
 df = market2.groupby(["type", "market_scale"], as_index = False) \
@@ -233,7 +257,8 @@ df = market2.groupby(["type", "market_scale"], as_index = False) \
 df.sort_values('market_count', ascending = False)
 
 # 만든 df를 x축에 시장 유형, y축은 규모 크기에 따른 점포 갯수
-sns.barplot(data = df, x = 'type', y = 'market_count', hue = 'market_scale')
+plt.clf()
+sns.barplot(data = df, y = 'type', x = 'market_count', hue = 'market_scale')
 plt.show()
 
 ```
@@ -244,13 +269,13 @@ plt.clf()
 ```
 
 ```{python}
-market2['region'] = market2['adress_road'].str.split().str[0]
-market2
 ```
 
 # 인구 데이터와 시장 데이터 합치기
 
 ```{python}
+market2['region'] = market2['adress_road'].str.split().str[0]
+
 market_pop = pd.merge(market2, pop_ratio, how = 'left', on = 'region')
 market_pop
 ```
@@ -261,19 +286,159 @@ market_pop
 market_pop['age_over_60'].describe()
 ```
 
-평균 20.25% 보다 높은 지역을 60대 이상 비율이 많다고 정의
+중앙값 19.55% 보다 높은 지역을 60대 이상 비율이 많다고 정의
 
-# 표 그리기
+# 시장 종류 갯수
 
 ```{python}
-# 평균 변수 지정
-mean_60 = market_pop['age_over_60'].mean()
 
-mean_60_up = market_pop['age_over_60'] >= mean_60
-mean_60_down = market_pop['age_over_60'] <= mean_60
-mean_60_down.count()
-# 집단 나누기
-sdasdasd
+# 노인인구 평균 비교
+market_pop['under'] = np.where(market_pop['age_over_60'] < 19.55,1,0)
+market_pop['over'] = np.where(market_pop['age_over_60'] >= 19.55,1,0)
+market_pop.groupby(['region']) \
+          .agg(노인인구평균이상 = ('over','sum'), 노인인구평균이하 = ('under','sum'))
+    
+```
+시장 종류가 몇 개인지 알아보기 위해 지역기준으로 1행에서 노인인구 비율이 높으면 1, 2행에서도 노인인구 비율이 낮으면 1의 값을 주어 모두 더하는 방식으로 계산했다.
+```{python}
+market_pop['over'] = np.where(market_pop['age_over_60'] >= 19.55,1,1)
+market_pop.groupby(['region']) \
+          .agg(시장종류갯수 = ('over','sum')) \
+          .sort_values('시장종류갯수', ascending = False)
+```
+```{python}
+시장종류갯수 = market_pop.groupby(['region']) \
+                         .agg(시장종류갯수 = ('over','sum')) \
+                         .sort_values('시장종류갯수',ascending = False)
 
+plt.clf()
+sns.barplot(data = 시장종류갯수, y = 'region', x = '시장종류갯수', hue = '시장종류갯수')
+plt.show()
+```
+각 지역의 점포수를 sum 해보기
+
+```{python}
+#중앙값보다 높고 낮음을 yes | no로 표시하기
+market_pop['over'] = np.where(market_pop['age_over_60'] >= 19.55,'Y','N')
+
+over_점포수 = market_pop.groupby(['region','over']) \
+                        .agg(count = ('market_count','sum')) \
+                        .sort_values('count', ascending = False)
+over_점포수
+```
+
+```{python}
+#서울과 경기도의 인구 비율 고려하기
+(pop_서울 + pop_경기) / 51529338 * 100
+```
+2015년 서울과 경기도의 인구 비율은 43.75% 로 가장 많은 인구가 있다.
+인구가 많으면 자연스레 시장의 수도 많은 것은 부정할 수 없는 사실이다.
+
+그래서 이 두 지역을 제외한 나머지 결과를 보았습니다.
+
+```{python}
+# 서울과 경기도를 제외한 인구 그래프
+
+plt.clf()
+sns.barplot(data = data_pop[2:], y = '행정기관', x = 'count', hue = '행정기관')
+plt.show()
 
 ```
+
+
+```{python}
+# 인구 많은 지역 제외
+over_점포수_new = over_점포수.drop('서울특별시').drop('경기도')
+over_점포수_new
+```
+
+```{python}
+plt.clf()
+sns.barplot(data = over_점포수_new, y = 'region', x = 'count', hue = 'over', palette='Set1')
+plt.show()
+```
+상위 5개 중 노인비율이 높은 3곳이 점포수가 많았으며, 노인비율이 낮은 대구, 인천이 4,5위를 하였습니다.
+
+충청도,전라도,강원도와 같은 노인비율이 높은 곳이 다음 순위를 기록하였습니다. 제주도, 3개의 광역시, 세종특별시가 하위권을 기록하였습니다.
+
+
+```{python}
+plt.clf()
+sns.barplot(data = data_pop[2:], y = '행정기관', x = 'count', hue = '행정기관')
+plt.show()
+
+plt.clf()
+sns.barplot(data = over_점포수_new, y = 'region', x = 'count', hue = 'over', palette='Set1')
+plt.show()
+```
+지역 인구수 3위 : 인천광역시가 점포수에서는 5위
+
+지역 인구수 5위 : 대구광역시가 점포수에서는 4위
+
+를 기록하였습니다.
+
+인천은 인구가 많지만 노인인구비율이 적어 점포수에서 하락(???)했습니다.
+반대로 대구는 인천보다 인구수가 적지만 경상도의 중심에 있다는 정보를 고려하면 노인인구 비율이 높은 영향을 받아 점포수에서 순위 상승이 있는 것로 판단(????)
+
+인구가 많으면서 노인비율이 높은 부산광역시에서 점포수가 가장 많았습니다.
+그리고 인천과 대구 2개의 광역시가 4,5위를 기록했지만 노인인구비율이 높은 도 단위 행정구역이 모두 상단에 위치한다는 점을 알 수 있었습니다.
+
+기본적으로 점포수는 인구수의 영향을 받아 순위가 메겨지는 점은 당연한 사실입니다.
+하지만 노인인구비율도 높은 곳이 동시에 점포수가 많다는 점을 알 수 있습니다.
+
+
+# 점포갯수 / 노인인구
+```{python}
+# 지역별 노인 인구
+서울_노인 = (pop.iloc[1,9:14].sum())
+부산_노인 = (pop.iloc[2,9:14].sum())
+대구_노인 = (pop.iloc[3,9:14].sum())
+인천_노인 = (pop.iloc[4,9:14].sum())
+광주_노인 = (pop.iloc[5,9:14].sum())
+대전_노인 = (pop.iloc[6,9:14].sum())
+울산_노인 = (pop.iloc[7,9:14].sum())
+세종_노인 = (pop.iloc[8,9:14].sum())
+경기_노인 = (pop.iloc[9,9:14].sum())
+강원_노인 = (pop.iloc[10,9:14].sum())
+충북_노인 = (pop.iloc[11,9:14].sum())
+충남_노인 = (pop.iloc[12,9:14].sum())
+전북_노인 = (pop.iloc[13,9:14].sum())
+전남_노인 = (pop.iloc[14,9:14].sum())
+경북_노인 = (pop.iloc[15,9:14].sum())
+경남_노인 = (pop.iloc[16,9:14].sum())
+제주_노인 = (pop.iloc[17,9:14].sum())
+
+지역별노인 = pd.DataFrame({
+    'region' : ['서울특별시', '부산광역시', '대구광역시', '인천광역시', '광주광역시',
+    '대전광역시', '울산광역시', '세종특별시', '경기도', '강원도', '충청북도',
+    '충청남도','전라북도','전라남도', '경상북도', '경상남도', '제주도'],
+    '노인인구수' : [서울_노인,부산_노인,대구_노인,인천_노인,광주_노인,대전_노인,울산_노인,
+                   세종_노인,경기_노인,강원_노인,충북_노인,충남_노인,전북_노인,전남_노인,
+                   경북_노인,경남_노인,제주_노인]
+                   })
+지역별노인 = 지역별노인.sort_values('노인인구수', ascending = False)
+지역별노인
+```
+```{python}
+# 시장데이터와 지역별노인 데이터 합치기
+market_pop_old = pd.merge(market_pop, 지역별노인, how = 'left', on = 'region')
+```
+```{python}
+ratio_old = market_pop_old.groupby(['region','노인인구수'], as_index = False) \
+                          .agg(count = ('market_count','sum')) \
+                          .sort_values('count', ascending = False)
+ratio_old
+```
+```{python}
+# 점포 수 / 노인인구 수
+ratio_old = ratio_old.assign(ratio = ratio_old['count'] / ratio_old['노인인구수'] * 100)
+ratio_old = ratio_old.sort_values('ratio',ascending = False)
+ratio_old
+```
+```{python}
+plt.clf()
+sns.barplot(data = ratio_old, x = 'ratio', y = 'region', hue = 'region')
+plt.show()
+```
+
+
