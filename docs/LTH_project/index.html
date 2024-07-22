@@ -104,10 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
-
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -215,20 +212,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="점포수-크기에-따른-연령층-확인하기" class="level1">
 <h1>점포수 크기에 따른 연령층 확인하기</h1>
-<div id="e00e40c1" class="cell" data-execution_count="1">
+<div id="093d17d9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="년-12월-기준-인구조사-파일-불러오기" class="level4">
 <h4 class="anchored" data-anchor-id="년-12월-기준-인구조사-파일-불러오기">2015년 12월 기준 인구조사 파일 불러오기</h4>
-<div id="f530d410" class="cell" data-execution_count="2">
+<div id="a6eb8872" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pop <span class="op">=</span> pd.read_excel(<span class="st">'data/pop_2015.xlsx'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="원본-숫자-안에-를-없애기-문자열을-숫자열로-바꾸기" class="level4">
 <h4 class="anchored" data-anchor-id="원본-숫자-안에-를-없애기-문자열을-숫자열로-바꾸기">원본 숫자 안에 , 를 없애기 (문자열을 숫자열로 바꾸기)</h4>
 <p>원본 데이터의 values를 보면 천 단위로 , 가 있다. 때문에 문자열로 인식되어서 이를 지우고 숫자열로 바꾼다.</p>
-<div id="7cb390a1" class="cell" data-execution_count="3">
+<div id="3f32d465" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>subset <span class="op">=</span> pop.iloc[<span class="dv">1</span>:<span class="dv">18</span>,<span class="dv">1</span>:<span class="dv">14</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> subset.columns:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    subset[col] <span class="op">=</span> subset[col].<span class="bu">str</span>.replace(<span class="st">','</span>, <span class="st">''</span>).astype(<span class="bu">int</span>)</span>
@@ -535,7 +532,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="d5a38e83" class="cell" data-execution_count="4">
+<div id="89795623" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pop.iloc[<span class="dv">1</span>:<span class="dv">18</span>,<span class="dv">1</span>:<span class="dv">14</span>] <span class="op">=</span> subset</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pop <span class="op">=</span> pop.iloc[<span class="dv">0</span>:<span class="dv">18</span>,<span class="dv">0</span>:<span class="dv">14</span>]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -879,7 +876,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="전국을-제외한-총-인구-그래프화" class="level4">
 <h4 class="anchored" data-anchor-id="전국을-제외한-총-인구-그래프화">전국을 제외한 총 인구 그래프화</h4>
-<div id="3414a484" class="cell" data-execution_count="5">
+<div id="64860125" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data_pop <span class="op">=</span> pop.drop(<span class="dv">0</span>).groupby(<span class="st">'행정기관'</span>) <span class="op">\</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                      .agg(count <span class="op">=</span> (<span class="st">'총 인구수'</span>,<span class="st">'min'</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_pop <span class="op">=</span> data_pop.sort_values(<span class="st">'count'</span>,ascending <span class="op">=</span> <span class="va">False</span>)</span>
@@ -974,7 +971,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="775b3642" class="cell" data-execution_count="6">
+<div id="68473608" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -995,7 +992,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="각-지역마다-연령층-비율-계산하기" class="level4">
 <h4 class="anchored" data-anchor-id="각-지역마다-연령층-비율-계산하기">각 지역마다 연령층 비율 계산하기</h4>
-<div id="294a0f7b" class="cell" data-execution_count="7">
+<div id="b6c09a08" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pop_서울, pop_부산, pop_대구, pop_인천, pop_광주, pop_대전, pop_울산, pop_세종, <span class="op">\</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pop_경기, pop_강원, pop_충북, pop_충남, pop_전북, pop_전남, pop_경북, pop_경남, pop_제주 <span class="op">=</span> [</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    pop[<span class="st">'총 인구수'</span>][i] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">18</span>)]</span>
@@ -1059,7 +1056,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="인구-비율-dataframe-만들기" class="level4">
 <h4 class="anchored" data-anchor-id="인구-비율-dataframe-만들기">인구 비율 DataFrame 만들기</h4>
-<div id="dcfca854" class="cell" data-execution_count="8">
+<div id="81934a97" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pop_ratio <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'서울'</span>      : [서울_유소년_비율, 서울_성인_비율, 서울_노인_비율],</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'부산'</span>      : [부산_유소년_비율, 부산_성인_비율, 부산_노인_비율],</span>
@@ -1083,7 +1080,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>pop_ratio.index <span class="op">=</span> [<span class="st">'age_under_20'</span>,<span class="st">'age_2050'</span>,<span class="st">'age_over_60'</span>]</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>pop_ratio <span class="op">=</span> pop_ratio.transpose()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="14d6a575" class="cell" data-execution_count="9">
+<div id="21f89d73" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 지역 칼럼 추가하기</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pop_ratio[<span class="st">'region'</span>] <span class="op">=</span> [<span class="st">'서울특별시'</span>, <span class="st">'부산광역시'</span>, <span class="st">'대구광역시'</span>, <span class="st">'인천광역시'</span>, <span class="st">'광주광역시'</span>, <span class="st">'대전광역시'</span>, <span class="st">'울산광역시'</span>, <span class="st">'세종특별시'</span>, <span class="st">'경기도'</span>, <span class="st">'강원도'</span>, <span class="st">'충청북도'</span>, <span class="st">'충청남도'</span>, <span class="st">'전라북도'</span>, <span class="st">'전라남도'</span>, <span class="st">'경상북도'</span>, <span class="st">'경상남도'</span>, <span class="st">'제주도'</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1233,14 +1230,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="전통시장-데이터-불러오기" class="level1">
 <h1>전통시장 데이터 불러오기</h1>
-<div id="1ee690fe" class="cell" data-execution_count="10">
+<div id="08db3ab3" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 불러오기</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>market <span class="op">=</span> pd.read_excel(<span class="st">"data/traditionalmarket.xlsx"</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 분석을 위한 복사본 만들기</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>market2 <span class="op">=</span> market.copy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f983b71d" class="cell" data-execution_count="11">
+<div id="fe5388c8" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 엑셀의 변수 한글을 영어로 rename</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>market2 <span class="op">=</span> market2.rename(columns <span class="op">=</span> {<span class="st">"시장명"</span>              : <span class="st">"market_name"</span>, </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"시장유형"</span>            : <span class="st">"type"</span>,</span>
@@ -1254,7 +1251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"개설년도"</span>            : <span class="st">"year"</span>,</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"데이터기준일자"</span>      : <span class="st">"data_date"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="485e3553" class="cell" data-execution_count="12">
+<div id="89e9d801" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터의 정보 확인하기</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>market2.describe()</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>market2[<span class="st">"public_toilet"</span>].info()</span>
@@ -1290,7 +1287,7 @@ max      5852.000000
 Name: market_count, dtype: float64</code></pre>
 </div>
 </div>
-<div id="f7659a9f" class="cell" data-execution_count="13">
+<div id="044e3287" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 점포수에 따른 규모 크기를 설명해주는 변수 만들기</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>market2 <span class="op">=</span> market2.assign(market_scale <span class="op">=</span> np.where(market2[<span class="st">"market_count"</span>] <span class="op">&gt;=</span> <span class="dv">134</span>, <span class="st">"large"</span>, </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                        np.where(market2[<span class="st">"market_count"</span>] <span class="op">&gt;=</span> <span class="dv">50</span>, <span class="st">"medium"</span>, <span class="st">"small"</span>)))</span>
@@ -1299,7 +1296,7 @@ Name: market_count, dtype: float64</code></pre>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>market2[<span class="st">'level'</span>] <span class="op">=</span> np.where((market2[<span class="st">'public_toilet'</span>] <span class="op">==</span> <span class="st">'Y'</span>) <span class="op">&amp;</span> (market2[<span class="st">'parking_lot'</span>] <span class="op">==</span> <span class="st">'Y'</span>), <span class="st">'high'</span>, </span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                   np.where((market2[<span class="st">'public_toilet'</span>] <span class="op">==</span> <span class="st">'N'</span>) <span class="op">&amp;</span> (market2[<span class="st">'public_toilet'</span>] <span class="op">==</span> <span class="st">'N'</span>) , <span class="st">'low'</span>, <span class="st">'intermediate'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cc1dbd59" class="cell" data-execution_count="14">
+<div id="6728d26e" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 확인 절차</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>market2.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
@@ -1412,7 +1409,7 @@ Name: market_count, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="764d1f07" class="cell" data-execution_count="15">
+<div id="d0ee3a5d" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 그리기</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1429,7 +1426,7 @@ Name: market_count, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="c970a9ae" class="cell" data-execution_count="16">
+<div id="e2818b33" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 그리기 위한 df 생성</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 시장 유형와 규모 크기에 따른 그룹화 / 규모 크기 갯수 추가</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> market2.groupby([<span class="st">"type"</span>, <span class="st">"market_scale"</span>], as_index <span class="op">=</span> <span class="va">False</span>) <span class="op">\</span></span>
@@ -1450,7 +1447,7 @@ Name: market_count, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="34f0205e" class="cell" data-execution_count="17">
+<div id="10174964" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;Figure size 672x480 with 0 Axes&gt;</code></pre>
@@ -1459,7 +1456,7 @@ Name: market_count, dtype: float64</code></pre>
 </section>
 <section id="인구-데이터와-시장-데이터-합치기" class="level1">
 <h1>인구 데이터와 시장 데이터 합치기</h1>
-<div id="ca1d21f6" class="cell" data-execution_count="18">
+<div id="1489fdbf" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>market2[<span class="st">'region'</span>] <span class="op">=</span> market2[<span class="st">'adress_road'</span>].<span class="bu">str</span>.split().<span class="bu">str</span>[<span class="dv">0</span>]</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>market_pop <span class="op">=</span> pd.merge(market2, pop_ratio, how <span class="op">=</span> <span class="st">'left'</span>, on <span class="op">=</span> <span class="st">'region'</span>)</span>
@@ -1722,7 +1719,7 @@ Name: market_count, dtype: float64</code></pre>
 </section>
 <section id="대-이상-비율의-계급-나누기" class="level1">
 <h1>60대 이상 비율의 계급 나누기</h1>
-<div id="df69fdc7" class="cell" data-execution_count="19">
+<div id="32a184c8" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>market_pop[<span class="st">'age_over_60'</span>].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>count    1439.000000
@@ -1740,7 +1737,7 @@ Name: age_over_60, dtype: float64</code></pre>
 </section>
 <section id="시장-종류-갯수" class="level1">
 <h1>시장 종류 갯수</h1>
-<div id="6d8ed487" class="cell" data-execution_count="20">
+<div id="e019340e" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 노인인구 평균 비교</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>market_pop[<span class="st">'under'</span>] <span class="op">=</span> np.where(market_pop[<span class="st">'age_over_60'</span>] <span class="op">&lt;</span> <span class="fl">19.55</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>market_pop[<span class="st">'over'</span>] <span class="op">=</span> np.where(market_pop[<span class="st">'age_over_60'</span>] <span class="op">&gt;=</span> <span class="fl">19.55</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
@@ -1856,7 +1853,7 @@ Name: age_over_60, dtype: float64</code></pre>
 </div>
 </div>
 <p>시장 종류가 몇 개인지 알아보기 위해 지역기준으로 1행에서 노인인구 비율이 높으면 1, 2행에서도 노인인구 비율이 낮으면 1의 값을 주어 모두 더하는 방식으로 계산했다.</p>
-<div id="8c769e19" class="cell" data-execution_count="21">
+<div id="4a57de28" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>market_pop[<span class="st">'over'</span>] <span class="op">=</span> np.where(market_pop[<span class="st">'age_over_60'</span>] <span class="op">&gt;=</span> <span class="fl">19.55</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>market_pop.groupby([<span class="st">'region'</span>]) <span class="op">\</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>          .agg(시장종류갯수 <span class="op">=</span> (<span class="st">'over'</span>,<span class="st">'sum'</span>)) <span class="op">\</span></span>
@@ -1951,7 +1948,7 @@ Name: age_over_60, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="33d3ef09" class="cell" data-execution_count="22">
+<div id="b1256aa4" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>시장종류갯수 <span class="op">=</span> market_pop.groupby([<span class="st">'region'</span>]) <span class="op">\</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                         .agg(시장종류갯수 <span class="op">=</span> (<span class="st">'over'</span>,<span class="st">'sum'</span>)) <span class="op">\</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                         .sort_values(<span class="st">'시장종류갯수'</span>,ascending <span class="op">=</span> <span class="va">False</span>)</span>
@@ -1967,8 +1964,8 @@ Name: age_over_60, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<p>각 지역의 점포수를 sum 해보기</p>
-<div id="b2b075d0" class="cell" data-execution_count="23">
+<p>각 지역의 점포수를 sum 해보기 -over 값을 up down으로 수정하기-</p>
+<div id="f99259dc" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#중앙값보다 높고 낮음을 yes | no로 표시하기</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>market_pop[<span class="st">'over'</span>] <span class="op">=</span> np.where(market_pop[<span class="st">'age_over_60'</span>] <span class="op">&gt;=</span> <span class="fl">19.55</span>,<span class="st">'Y'</span>,<span class="st">'N'</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2085,7 +2082,7 @@ Name: age_over_60, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="8276565d" class="cell" data-execution_count="24">
+<div id="3450d1fd" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#서울과 경기도의 인구 비율 고려하기</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>(pop_서울 <span class="op">+</span> pop_경기) <span class="op">/</span> <span class="dv">51529338</span> <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
@@ -2094,7 +2091,7 @@ Name: age_over_60, dtype: float64</code></pre>
 </div>
 <p>2015년 서울과 경기도의 인구 비율은 43.75% 로 가장 많은 인구가 있다. 인구가 많으면 자연스레 시장의 수도 많은 것은 부정할 수 없는 사실이다.</p>
 <p>그래서 이 두 지역을 제외한 나머지 결과를 보았습니다.</p>
-<div id="99722410" class="cell" data-execution_count="25">
+<div id="d8483ba5" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 서울과 경기도를 제외한 인구 그래프</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
@@ -2108,12 +2105,12 @@ Name: age_over_60, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="d282f1dc" class="cell" data-execution_count="26">
+<div id="26a87ffa" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 인구 많은 지역 제외</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>over_점포수_new <span class="op">=</span> over_점포수.drop(<span class="st">'서울특별시'</span>).drop(<span class="st">'경기도'</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>over_점포수_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\USER\AppData\Local\Temp\ipykernel_9604\2426921295.py:2: PerformanceWarning:
+<pre><code>C:\Users\USER\AppData\Local\Temp\ipykernel_4952\2426921295.py:2: PerformanceWarning:
 
 dropping on a non-lexsorted multi-index without a level parameter may impact performance.
 </code></pre>
@@ -2217,7 +2214,7 @@ dropping on a non-lexsorted multi-index without a level parameter may impact per
 </div>
 </div>
 </div>
-<div id="411c77e2" class="cell" data-execution_count="27">
+<div id="50a8e154" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sns.barplot(data <span class="op">=</span> over_점포수_new, y <span class="op">=</span> <span class="st">'region'</span>, x <span class="op">=</span> <span class="st">'count'</span>, hue <span class="op">=</span> <span class="st">'over'</span>, palette<span class="op">=</span><span class="st">'Set1'</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2231,7 +2228,7 @@ dropping on a non-lexsorted multi-index without a level parameter may impact per
 </div>
 <p>상위 5개 중 노인비율이 높은 3곳이 점포수가 많았으며, 노인비율이 낮은 대구, 인천이 4,5위를 하였습니다.</p>
 <p>충청도,전라도,강원도와 같은 노인비율이 높은 곳이 다음 순위를 기록하였습니다. 제주도, 3개의 광역시, 세종특별시가 하위권을 기록하였습니다.</p>
-<div id="247b0640" class="cell" data-execution_count="28">
+<div id="55a5ced1" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sns.barplot(data <span class="op">=</span> data_pop[<span class="dv">2</span>:], y <span class="op">=</span> <span class="st">'행정기관'</span>, x <span class="op">=</span> <span class="st">'count'</span>, hue <span class="op">=</span> <span class="st">'행정기관'</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
@@ -2263,7 +2260,7 @@ dropping on a non-lexsorted multi-index without a level parameter may impact per
 </section>
 <section id="점포갯수-노인인구" class="level1">
 <h1>점포갯수 / 노인인구</h1>
-<div id="137f3c6b" class="cell" data-execution_count="29">
+<div id="bbd001fd" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 지역별 노인 인구</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>서울_노인 <span class="op">=</span> (pop.iloc[<span class="dv">1</span>,<span class="dv">9</span>:<span class="dv">14</span>].<span class="bu">sum</span>())</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>부산_노인 <span class="op">=</span> (pop.iloc[<span class="dv">2</span>,<span class="dv">9</span>:<span class="dv">14</span>].<span class="bu">sum</span>())</span>
@@ -2397,11 +2394,11 @@ dropping on a non-lexsorted multi-index without a level parameter may impact per
 </div>
 </div>
 </div>
-<div id="0935cbe7" class="cell" data-execution_count="30">
+<div id="19c16a64" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시장데이터와 지역별노인 데이터 합치기</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>market_pop_old <span class="op">=</span> pd.merge(market_pop, 지역별노인, how <span class="op">=</span> <span class="st">'left'</span>, on <span class="op">=</span> <span class="st">'region'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="fdef5bd0" class="cell" data-execution_count="31">
+<div id="3fe557da" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ratio_old <span class="op">=</span> market_pop_old.groupby([<span class="st">'region'</span>,<span class="st">'노인인구수'</span>], as_index <span class="op">=</span> <span class="va">False</span>) <span class="op">\</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                          .agg(count <span class="op">=</span> (<span class="st">'market_count'</span>,<span class="st">'sum'</span>)) <span class="op">\</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                          .sort_values(<span class="st">'count'</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
@@ -2528,7 +2525,7 @@ dropping on a non-lexsorted multi-index without a level parameter may impact per
 </div>
 </div>
 </div>
-<div id="091a281f" class="cell" data-execution_count="32">
+<div id="2e6bc357" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 점포 수 / 노인인구 수</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>ratio_old <span class="op">=</span> ratio_old.assign(ratio <span class="op">=</span> ratio_old[<span class="st">'count'</span>] <span class="op">/</span> ratio_old[<span class="st">'노인인구수'</span>] <span class="op">*</span> <span class="dv">100</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>ratio_old <span class="op">=</span> ratio_old.sort_values(<span class="st">'ratio'</span>,ascending <span class="op">=</span> <span class="va">False</span>)</span>
@@ -2673,7 +2670,7 @@ dropping on a non-lexsorted multi-index without a level parameter may impact per
 </div>
 </div>
 </div>
-<div id="26745b2b" class="cell" data-execution_count="33">
+<div id="b98a93b6" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sns.barplot(data <span class="op">=</span> ratio_old, x <span class="op">=</span> <span class="st">'ratio'</span>, y <span class="op">=</span> <span class="st">'region'</span>, hue <span class="op">=</span> <span class="st">'region'</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
